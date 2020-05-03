@@ -20,10 +20,25 @@ class Siswa extends CI_Controller {
     {
         if ($_POST)
         {
+            $this->session->set_userdata('siswa_form', $_POST);
             if ($this->_validation())
             {
+                $this->session->unset_userdata('siswa_form');
                 $photo = $this->upload();
-                $this->m_siswa->field_data(1, $photo);
+                $more = [];
+                if (!empty($_FILES['n_raport_1_5'])) {
+                    $f_name = $this->input->post('nisn') .'-raport-1-5.pdf';
+                    if (move_uploaded_file($_FILES['n_raport_1_5']['tmp_name'], APPPATH . '../assets/pdf/'. $f_name)) {
+                        $more['n_raport_1_5'] = $f_name;
+                    }
+                }
+                if (!empty($_FILES['no_ujian_smp'])) {
+                    $f_name = $this->input->post('nisn') .'-no-ujian-smp.pdf';
+                    if (move_uploaded_file($_FILES['no_ujian_smp']['tmp_name'], APPPATH . '../assets/pdf/'. $f_name)) {
+                        $more['no_ujian_smp'] = $f_name;
+                    }
+                }
+                $this->m_siswa->field_data(1, $photo, $more);
                 $this->m_siswa->save();
                 $this->print_formulir($this->db->insert_id());
             }
@@ -43,6 +58,10 @@ class Siswa extends CI_Controller {
             $data['prodi']     = $this->m_prodi->get_dropdown();
             $data['captcha']   = $this->_set_captcha();
             $data['query']     = FALSE;
+            if (!empty($this->session->userdata('siswa_form'))) {
+                $data['query'] = $this->session->userdata('siswa_form');
+                $this->session->unset_userdata('siswa_form');
+            }
 
             if (config('status_daftar') == 'n')
             {
@@ -418,17 +437,19 @@ class Siswa extends CI_Controller {
         if($this->upload->do_upload('file') == TRUE)
         {
             $data   = $this->upload->data();
-            $config = array(
-                      'source_image'    => $data['full_path'],
-        	 	      'new_image'       => APPPATH . '../assets/photo/',
-        		      //'maintain_ration' => TRUE,
-        		      'width'           => 113,
-        		      'height'          => 170
-    		          );
-  		    $this->load->library('image_lib', $config);
-    		$this->image_lib->resize();
-            $file = APPPATH . '../assets/' . $data['file_name'];
-            unlink($file);
+            try {
+                $config = array(
+                    'source_image' => $data['full_path'],
+                    'new_image' => APPPATH . '../assets/photo/',
+                    //'maintain_ration' => TRUE,
+                    'width' => 113,
+                    'height' => 170
+                );
+                $this->load->library('image_lib', $config);
+                $this->image_lib->resize();
+                $file = APPPATH . '../assets/' . $data['file_name'];
+                unlink($file);
+            } catch (Exception $exception){}
             return $data['file_name'];
         }
         else
@@ -444,4 +465,18 @@ class Siswa extends CI_Controller {
             unlink('./assets/photo/'.$file);
         }
     }
+
+    public function nisn_check()
+    {
+        if (!empty($this->input->post('nisn'))) {
+            if ($this->m_siswa->is_exist('nisn', $this->input->post('nisn')) == TRUE) {
+                echo 'unavailable';
+            } else {
+                echo 'available';
+            }
+        } else {
+            echo 'available';
+        }
+    }
+
 }

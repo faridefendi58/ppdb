@@ -12,7 +12,7 @@ class M_siswa extends CI_Model {
         date_default_timezone_set('Asia/Jakarta');
     }
 
-    public function field_data($type = 1, $photo = NULL)
+    public function field_data($type = 1, $photo = NULL, $more = [])
     {
         $this->data = array(
                       'nisn'           => $this->input->post('nisn'),
@@ -98,6 +98,12 @@ class M_siswa extends CI_Model {
         if ($photo != NULL)
         {
             $this->data['photo'] = $photo;
+        }
+
+        if (count($more) > 0) {
+            foreach ($more as $m_field => $m_val) {
+                $this->data[$m_field] = $m_val;
+            }
         }
     }
 
