@@ -271,7 +271,7 @@
                                              <span class="btn btn-file">
                                                 <span class="fileupload-new">Browse</span>
                                                 <span class="fileupload-exists">Change</span>
-                                                <input type="file" class="default" name="file" accept=".jpg" required="required"/>
+                                                <input type="file" class="default" name="file" accept=".jpg"  <?php if ($this->uri->segment(2) == 'create') : ?>required="required"<?php endif; ?>/>
                                              </span>
                                         <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
                                     </div>
@@ -329,7 +329,9 @@
                             <label class="control-label">Pekerjaan Ayah</label>
                             <div class="controls">
                                 <?php
-                                echo form_dropdown('pekerjaan_ortu', $pekerjaan, $query['pekerjaan_ortu'], "class='span12 chosen' required='true'");
+                                $pekerjaan_ayah = $pekerjaan;
+                                unset($pekerjaan_ayah[20]);
+                                echo form_dropdown('pekerjaan_ortu', $pekerjaan_ayah, $query['pekerjaan_ortu'], "class='span12 chosen' required='true'");
                                 ?>
                             </div>
                         </div>
@@ -386,8 +388,8 @@
                             <label class="control-label">Pekerjaan Ibu</label>
                             <div class="controls">
                                 <?php
-                                $ki = array('1' => 'PNS/TNI/POLRI/BUMN', '2' => 'Wirausaha', '3' => 'Karyawan Swasta', '4' => 'Buruh', '5' => 'Petani', '6' => 'Ibu Rumah Tangga', '7' => 'Sudah Meninggal');
-                                echo form_dropdown('hasil_ibu', $ki, $query['hasil_ibu'], "class='span12 chosen' required='true'"); ?>
+                                //$ki = array('1' => 'PNS/TNI/POLRI/BUMN', '2' => 'Wirausaha', '3' => 'Karyawan Swasta', '4' => 'Buruh', '5' => 'Petani', '6' => 'Ibu Rumah Tangga', '7' => 'Sudah Meninggal');
+                                echo form_dropdown('hasil_ibu', $pekerjaan, $query['hasil_ibu'], "class='span12 chosen' required='true'"); ?>
                             </div>
                         </div>
 
@@ -755,7 +757,10 @@
                         <div class="control-group">
                             <label class="control-label">Nilai Raport Semester 1 - 5</label>
                             <div class="controls">
-                                <input type="file" name="n_raport_1_5" class="span8" required="required" accept=".pdf" onchange="return checkDoc(this);"/>
+                                <?php if (($this->uri->segment(2) == 'update') && !empty($query['n_raport_1_5'])) : ?>
+                                    <a href="<?php echo site_url('assets/pdf/'. $query['n_raport_1_5']) ?>" title="Nilai Raport Semester 1 - 5" target="_blank"><?php echo $query['n_raport_1_5'];?></a><br><br>
+                                <?php endif; ?>
+                                <input type="file" name="n_raport_1_5" class="span8"  <?php if ($this->uri->segment(2) == 'create') : ?>required="required"<?php endif;?> accept=".pdf" onchange="return checkDoc(this);"/>
                                 <p class="text-warning"><b>Pastikan file Nilai Raport Semester 1 Sampai 5 dalam format .pdf dengan ukuran MAKSIMAL 500 KB.</b></p>
                             </div>
                         </div>
@@ -764,12 +769,16 @@
                         <div class="control-group">
                             <label class="control-label">Nomor Peserta Ujian SMP</label>
                             <div class="controls">
-                                <input type="file" name="no_ujian_smp" class="span8" required="required" accept=".pdf" onchange="return checkDoc(this);"/>
+                                <?php if (($this->uri->segment(2) == 'update') && !empty($query['no_ujian_smp'])) : ?>
+                                    <a href="<?php echo site_url('assets/pdf/'. $query['no_ujian_smp']) ?>" title="Nomor Peserta Ujian SMP" target="_blank"><?php echo $query['no_ujian_smp'];?></a><br><br>
+                                <?php endif; ?>
+                                <input type="file" name="no_ujian_smp" class="span8"  <?php if ($this->uri->segment(2) == 'create') : ?>required="required"<?php endif;?> accept=".pdf" onchange="return checkDoc(this);"/>
                                 <p class="text-warning"><b>Pastikan file Nomor Peserta Ujan SMP dalam format .pdf dengan ukuran MAKSIMAL 500 KB.</b></p>
                             </div>
                         </div>
                         <br>
 
+                        <?php if ($this->uri->segment(2) == 'create') : ?>
                         <div class="control-group">
                             <div class="controls checkbox-control">
                                 <input type="checkbox" name="agreement" required>
@@ -778,6 +787,7 @@
                                 Dan dengan ini saya telah melihat, membaca, memahami dan mematuhi peraturan sistem ppdb online <?= config('nama_sekolah'); ?>.
                             </div>
                         </div>
+                        <?php endif; ?>
 
                         <?php if ($this->uri->segment(2) == 'create') { ?>
                             <div class="control-group">
@@ -819,17 +829,26 @@
 <script src="<?=base_url();?>assets/theme/js/jquery-1.8.3.min.js"></script>
 <script src="<?=base_url();?>assets/theme/js/jquery.validate.js"></script>
 <script type="text/javascript">
-    var _options = {
-        errorClass: "text-error",
-        rules: {
-            agreement:"required",captcha:"required",file:"required"
-        },
-        messages: {
-            agreement:'Wajib mencentang persetujuan berikut:',
-            captcha:'Kolom "Kode Keamanan" wajib diisi.',
-            file:'Kolom "Foto" wajib diisi'
-        }
-    };
+    var is_update = "<?php echo ($this->uri->segment(2) == 'update')? 1 : 0 ?>";
+    if (is_update == "1") {
+        var _options = {
+            errorClass: "text-error",
+            rules: {nama:"required"},
+            messages: {nama:'Kolom "Nama" wajib diisi.'}
+        };
+    } else {
+        var _options = {
+            errorClass: "text-error",
+            rules: {
+                agreement:"required",captcha:"required",file:"required"
+            },
+            messages: {
+                agreement:'Wajib mencentang persetujuan berikut:',
+                captcha:'Kolom "Kode Keamanan" wajib diisi.',
+                file:'Kolom "Foto" wajib diisi'
+            }
+        };
+    }
     $(document).ready(function() {
     });
     $('input[required], textarea[required], select[required]').each(function () {

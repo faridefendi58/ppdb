@@ -199,7 +199,12 @@ if ( ! function_exists('extract_date'))
 {
     function extract_date($value)
     {
-        $year = explode('-', $value);
-        return $year[2].'-'.$year[1].'-'.$year[0];
+        if (!empty($value)) {
+            $year = explode('-', $value);
+
+            return $year[2] . '-' . $year[1] . '-' . $year[0];
+        } else {
+            return date("Y-m-d");
+        }
     }
 }

@@ -272,6 +272,32 @@ class M_siswa extends CI_Model {
         return $query->num_rows() == 1 ? $query->row_array() : NULL;
     }
 
+    public function findByPk($id)
+    {
+        $sql = "SELECT s.id, s.no_daftar, s.tgl_daftar, s.nisn, s.nik, s.no_akte, s.nama,
+            s.tmp_lahir, s.tgl_lahir, s.jalur_id, s.jns_kelamin, s.agama, s.anak_ke,
+            s.sdr_kandung, s.st_anak, s.alamat, s.no_kk, s.telp, s.no_kip, s.email,
+            s.b_badan, s.t_badan, s.g_darah, s.asal_sekolah, s.nama_ortu, s.nik_ayah,
+            s.nama_ibu, s.nik_ibu, s.alamat_ibu, s.hasil_ibu, s.hp_ibu, s.alamat_ortu,
+            pekerjaan.pk_nama, s.kerja_ibu, s.hasil_ortu, s.telp_ortu, s.n_bindo, s.n_bing,
+            s.n_mtk, s.n_ipa, s.n_rata, s.n_bindo2, s.n_bing2, s.n_mtk2, s.n_ipa2, s.n_rata2,
+            s.n_bindo3, s.n_bing3, s.n_mtk3, s.n_ipa3, s.n_rata3, s.n_bindo4, s.n_bing4,
+            s.n_mtk4, s.n_ipa4, s.n_rata4, s.n_bindo5,
+            s.n_bing5, s.n_mtk5, s.n_ipa5, s.n_rata5, s.nun_bindo, s.nun_bing,
+            s.nun_mtk, s.nun_ipa, s.nun_rata, s.nus_bindo, s.nus_bing, s.nus_mtk, s.nus_ipa, s.nus_rata, s.photo, s.pil_1, s.pil_2, s.pil_3, s.pil_4,
+            s.pekerjaan_ortu, s.diterima, s.n_raport_1_5, s.no_ujian_smp, 
+            p1.prodi_nama AS pilihan_1,p2.prodi_nama AS pilihan_2, p3.prodi_nama AS pilihan_3, p4.prodi_nama AS pilihan_4			 
+            FROM siswa s
+             LEFT JOIN pekerjaan ON pekerjaan.pk_id = s.pekerjaan_ortu 
+             LEFT JOIN prodi p1 ON p1.prodi_id = s.pil_1 
+             LEFT JOIN prodi p2 ON p2.prodi_id = s.pil_2 
+             LEFT JOIN prodi p3 ON p3.prodi_id = s.pil_3 
+             LEFT JOIN prodi p4 ON p4.prodi_id = s.pil_4 
+             WHERE id = ". $id;
+        $query = $this->db->query($sql);
+        return $query->num_rows() == 1 ? $query->row_array() : NULL;
+    }
+
     public function save()
     {
         $this->db->insert($this->table, $this->data);

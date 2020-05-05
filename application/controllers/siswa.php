@@ -130,7 +130,30 @@ class Siswa extends CI_Controller {
                         $query = $this->m_siswa->find($this->uri->segment(3));
                         $this->delete_photo($query['photo']);
                     }
-                    $this->m_siswa->field_data(2, $photo);
+
+                    $more = [];
+                    $sis = $this->m_siswa->findByPk($this->uri->segment(3));
+                    if (!empty($_FILES['n_raport_1_5'])) {
+                        $f_name = $this->input->post('nisn') .'-raport-1-5.pdf';
+                        if (!empty($sis['n_raport_1_5']) && file_exists(APPPATH . '../assets/pdf/'. $f_name)) {
+                            unlink(APPPATH . '../assets/pdf/'. $f_name);
+                        }
+                        if (move_uploaded_file($_FILES['n_raport_1_5']['tmp_name'], APPPATH . '../assets/pdf/'. $f_name)) {
+                            $more['n_raport_1_5'] = $f_name;
+                        }
+                    }
+                    if (!empty($_FILES['no_ujian_smp'])) {
+                        $f_name = $this->input->post('nisn') .'-no-ujian-smp.pdf';
+                        if (!empty($sis['no_ujian_smp']) && file_exists(APPPATH . '../assets/pdf/'. $f_name)) {
+                            unlink(APPPATH . '../assets/pdf/'. $f_name);
+                        }
+                        if (move_uploaded_file($_FILES['no_ujian_smp']['tmp_name'], APPPATH . '../assets/pdf/'. $f_name)) {
+                            $more['no_ujian_smp'] = $f_name;
+                        }
+                    }
+                    $this->m_siswa->field_data(2, $photo, $more);
+
+                    //$this->m_siswa->field_data(2, $photo);
                     $this->m_siswa->update($this->uri->segment(3));
                     $this->message->config('on', 'success', 'Data sudah diperbaharui!');
                     redirect('siswa/update/'.$this->uri->segment(3));
@@ -148,7 +171,8 @@ class Siswa extends CI_Controller {
         	    $data['action']    = site_url('siswa/update/'.$this->uri->segment(3));
                 $data['pekerjaan'] = $this->m_pekerjaan->get_dropdown();
                 $data['prodi']     = $this->m_prodi->get_dropdown();
-                $data['query']     = $this->m_siswa->find($this->uri->segment(3));
+                $data['query']     = $this->m_siswa->findByPk($this->uri->segment(3));
+
                 if ($data['query']['photo'] != '' && file_exists('assets/photo/'.$data['query']['photo']))
                 {
                     $data['photo'] = base_url().'assets/photo/'.$data['query']['photo'];
@@ -227,7 +251,7 @@ class Siswa extends CI_Controller {
         $this->load->library(array('fpdf'));
         define('FPDF_FONTPATH',$this->config->item('fonts_path'));
         $data['query'] = $this->m_siswa->find($siswa_id);
-        $this->load->view('report/formulir', $data);
+        $this->load->view('report/formulir_capslock', $data);
     }
 
     public function hasil_seleksi()
