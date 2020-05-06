@@ -17,7 +17,7 @@
     <div id="login">
       <h4 align=center>Penerimaan Siswa Baru</h4>
       <h4 align=center><?=config('nama_sekolah');?></h4>
-      <?=form_open('login/process', 'class="form-vertical no-padding no-margin" id="loginform"');?>
+      <?=form_open('adnel/process', 'class="form-vertical no-padding no-margin" id="loginform"');?>
       <div class="lock">
           <i class="icon-lock"></i>
       </div>

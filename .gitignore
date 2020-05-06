@@ -18,6 +18,7 @@ application/logs/*
 application/config/database.php
 .idea/*
 *.docx
+*.bak
 assets/images/*
 assets/photo/*
 assets/captcha/*

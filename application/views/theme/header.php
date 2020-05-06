@@ -52,7 +52,7 @@
                            </a>
                            <ul class="dropdown-menu">
                                <li><?=anchor('users/update', '<i class="icon-user"></i> My Profile');?></li>
-                               <li><?=anchor('login/logout', '<i class="icon-signout"></i> Log Out');?></li>
+                               <li><?=anchor('adnel/logout', '<i class="icon-signout"></i> Log Out');?></li>
                            </ul>
                        </li>
                    </ul>

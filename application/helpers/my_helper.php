@@ -4,6 +4,13 @@ if ( ! function_exists('to_rupiah'))
 {
 	function to_rupiah($value)
 	{
+        if (strstr($value, '.')) {
+            $value = str_replace('.', '', $value);
+        }
+        if (strstr($value, ',')) {
+            $value = str_replace(',', '.', $value);
+        }
+
 		if($value < 0)
 		{
 			return '( Rp '.number_format(abs($value), 0, '', '.').' )';
