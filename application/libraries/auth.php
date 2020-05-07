@@ -128,7 +128,7 @@ class Auth {
 	{
 	    if ( ! $this->is_logged_in() == TRUE)
         {
-            redirect('login');
+            redirect('adnel');
         }
 	}
 

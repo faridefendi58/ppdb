@@ -281,7 +281,9 @@
                                              <span class="btn btn-file">
                                                 <span class="fileupload-new">Browse</span>
                                                 <span class="fileupload-exists">Change</span>
-                                                <input type="file" class="default" name="file" accept=".jpg"  <?php if ($this->uri->segment(2) == 'create') : ?>required="required"<?php endif; ?>/>
+                                                <input type="file" class="default" name="file"
+                                                       accept=".jpg"  <?php if ($this->uri->segment(2) == 'create') : ?>required="required"<?php endif; ?>
+                                                       oninput="return checkImage(this);"/>
                                              </span>
                                         <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
                                     </div>
@@ -969,4 +971,45 @@
     $('input[type="number"]').each(function () {
         this.oninput = checkNumberLength;
     });
+    function checkImage(oInput) {
+        var _validFileExtensions = ["jpg", "JPG"];
+        if (oInput.type == "file") {
+            var sFileName = oInput.value;
+            if (sFileName.length > 0) {
+                var blnValid = false;
+                for (var j = 0; j < _validFileExtensions.length; j++) {
+                    var sCurExtension = _validFileExtensions[j];
+                    if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
+                        blnValid = true;
+                        break;
+                    }
+                }
+
+                var _file = oInput.files[0];
+                if (_file.size > 300000) {
+                    blnValid = false;
+                }
+
+                if (!blnValid) {
+                    $(oInput).addClass('text-error');
+                    var input_name = $(oInput).attr('name');
+                    var label_err = $(oInput).parent().find("label.text-error");
+                    if (label_err.length == 0) {
+                        $(oInput).parent().append('<label id="' + input_name + '-error" class="text-error" for="' + input_name + '">' + "Mohon pastikan dokumen yang Anda upload hanya dalam format " + _validFileExtensions.join(", ") + ' dan berukuran maksimal 300 Kb.</label>');
+                    } else {
+                        label_err.html("Mohon pastikan dokumen yang Anda upload hanya dalam format " + _validFileExtensions.join(", ") + " dan berukuran maksimal 300 Kb.");
+                    }
+                    oInput.value = "";
+                    //return false;
+                } else {
+                    console.log(oInput.value);
+                    var label_err = $(oInput).parent().find("label.text-error");
+                    if (label_err.length > 0) {
+                        label_err.remove();
+                    }
+                }
+            }
+        }
+        return true;
+    }
 </script>

@@ -285,7 +285,7 @@ $this->fpdf->Cell(5.7 ,0.5, strtoupper($query['pk_nama']), 0, 'LR', 'L');
 // kolom 2
 $this->fpdf->Cell(4 ,0.5, 'PEKERJAAN IBU',0,'LR', 'L');
 $this->fpdf->Cell(0.3 ,0.5, ':' ,0,'LR', 'L');
-$this->fpdf->Cell(5.7 ,0.5, strtoupper($query['kerja_ibu']), 0, 'LR', 'L');
+$this->fpdf->Cell(5.7 ,0.5, strtoupper($query['pk_ibu_nama']), 0, 'LR', 'L');
 
 $this->fpdf->Ln(0.4);
 $this->fpdf->SetX(1);

@@ -119,7 +119,9 @@ class M_siswa extends CI_Model {
                                     	    p1.prodi_nama AS pilihan_1, 
                                     	    p2.prodi_nama AS pilihan_2,
                                             p3.prodi_nama AS pilihan_3,
-                                            p4.prodi_nama AS pilihan_4
+                                            p4.prodi_nama AS pilihan_4,
+                                            s.n_raport_1_5,
+                                            s.no_ujian_smp 
                                      FROM siswa s
                                      INNER JOIN prodi p1 ON p1.prodi_id = s.pil_1
                                      INNER JOIN prodi p2 ON p2.prodi_id = s.pil_2
@@ -136,7 +138,9 @@ class M_siswa extends CI_Model {
                                                 p3.prodi_nama AS pilihan_3,
                                                 p4.prodi_nama AS pilihan_4,
                                     		s.nama, 
-                                    		p5.prodi_nama AS diterima
+                                    		p5.prodi_nama AS diterima,
+                                    		s.n_raport_1_5,
+                                            s.no_ujian_smp 
                                      FROM siswa s
                                      INNER JOIN prodi p1 ON p1.prodi_id = s.pil_1
                                      INNER JOIN prodi p2 ON p2.prodi_id = s.pil_2
@@ -156,7 +160,9 @@ class M_siswa extends CI_Model {
                                     		p2.prodi_nama AS pilihan_2,
                                                 p3.prodi_nama AS pilihan_3,
                                                 p4.prodi_nama AS pilihan_4,
-                                    		p5.prodi_nama AS diterima
+                                    		p5.prodi_nama AS diterima,
+                                    		s.n_raport_1_5,
+                                            s.no_ujian_smp 
                                      FROM siswa s
                                      INNER JOIN prodi p1 ON p1.prodi_id = s.pil_1
                                      INNER JOIN prodi p2 ON p2.prodi_id = s.pil_2
@@ -171,7 +177,9 @@ class M_siswa extends CI_Model {
             return $this->db->query("SELECT id,
                                             no_daftar,
                                             nama,
-                                            asal_sekolah
+                                            asal_sekolah,
+                                            n_raport_1_5,
+                                            no_ujian_smp 
                                      FROM siswa
                                      WHERE substring(no_daftar, 1, 4) = '$year'
                                      AND diterima = 't'");
@@ -214,6 +222,7 @@ class M_siswa extends CI_Model {
                                           s.alamat_ortu,
                                           pekerjaan.pk_nama,
                                           s.kerja_ibu,
+                                          pk2.pk_nama AS pk_ibu_nama,
                                           s.hasil_ortu,
                                           s.telp_ortu,
                                           s.n_bindo,
@@ -261,9 +270,12 @@ class M_siswa extends CI_Model {
                                           p1.prodi_nama AS pilihan_1, 
                                           p2.prodi_nama AS pilihan_2,
                                           p3.prodi_nama AS pilihan_3,
-                                          p4.prodi_nama AS pilihan_4			 
+                                          p4.prodi_nama AS pilihan_4,
+                                          s.n_raport_1_5,
+                                          s.no_ujian_smp 			 
                                   FROM siswa s
                                   INNER JOIN pekerjaan ON pekerjaan.pk_id = s.pekerjaan_ortu
+                                  INNER JOIN pekerjaan pk2 ON pk2.pk_id = s.kerja_ibu
                                   INNER JOIN prodi p1 ON p1.prodi_id = s.pil_1
                                   INNER JOIN prodi p2 ON p2.prodi_id = s.pil_2
                                   INNER JOIN prodi p3 ON p3.prodi_id = s.pil_3
@@ -279,7 +291,7 @@ class M_siswa extends CI_Model {
             s.sdr_kandung, s.st_anak, s.alamat, s.no_kk, s.telp, s.no_kip, s.email,
             s.b_badan, s.t_badan, s.g_darah, s.asal_sekolah, s.nama_ortu, s.nik_ayah,
             s.nama_ibu, s.nik_ibu, s.alamat_ibu, s.hasil_ibu, s.hp_ibu, s.alamat_ortu,
-            pekerjaan.pk_nama, s.kerja_ibu, s.hasil_ortu, s.telp_ortu, s.n_bindo, s.n_bing,
+            pekerjaan.pk_nama, s.kerja_ibu, pk2.pk_nama AS pk_ibu_nama, s.hasil_ortu, s.telp_ortu, s.n_bindo, s.n_bing,
             s.n_mtk, s.n_ipa, s.n_rata, s.n_bindo2, s.n_bing2, s.n_mtk2, s.n_ipa2, s.n_rata2,
             s.n_bindo3, s.n_bing3, s.n_mtk3, s.n_ipa3, s.n_rata3, s.n_bindo4, s.n_bing4,
             s.n_mtk4, s.n_ipa4, s.n_rata4, s.n_bindo5,
@@ -289,6 +301,7 @@ class M_siswa extends CI_Model {
             p1.prodi_nama AS pilihan_1,p2.prodi_nama AS pilihan_2, p3.prodi_nama AS pilihan_3, p4.prodi_nama AS pilihan_4			 
             FROM siswa s
              LEFT JOIN pekerjaan ON pekerjaan.pk_id = s.pekerjaan_ortu 
+             LEFT JOIN pekerjaan pk2 ON pk2.pk_id = s.kerja_ibu 
              LEFT JOIN prodi p1 ON p1.prodi_id = s.pil_1 
              LEFT JOIN prodi p2 ON p2.prodi_id = s.pil_2 
              LEFT JOIN prodi p3 ON p3.prodi_id = s.pil_3 

@@ -1,3 +1,11 @@
+<style>
+    @media only screen and (max-width: 480px) {
+        .dataTables_wrapper {width: 470px;margin: 0 auto;overflow-x: scroll;}
+    }
+    @media only screen and (max-width: 360px) {
+        .dataTables_wrapper {width: 320px;margin: 0 auto;overflow-x: scroll;}
+    }
+</style>
 <div id="main-content">
    <?=form_open($action);?>
    <input type="hidden" name="url" value="<?=uri_string()?>" />
@@ -51,6 +59,7 @@
                                     <th>Pilihan 2</th>
                                     <th>Pilihan 3</th>
                                     <th>Pilihan 4</th>
+                                    <th>Lampiran</th>
                                     <th>Diterima</th>
                                     <th style="width:55px;">&nbsp;</th>
                                     
@@ -60,6 +69,7 @@
                                     <th>Pilihan 2</th>
                                     <th>Pilihan 3</th>
                                     <th>Pilihan 4</th>
+                                        <th>Lampiran</th>
                                     <th style="width:75px;">&nbsp;</th>
                                     
                                     <?php } else if ($this->uri->segment(3) == 2) { ?>
@@ -88,6 +98,20 @@
                                     <td><?=$row->pilihan_2;?></td>
                                     <td><?=$row->pilihan_3;?></td>
                                     <td><?=$row->pilihan_4;?></td>
+                                    <td>
+                                        <?php
+                                        $attachments = [];
+                                        if (!empty($row->n_raport_1_5)):
+                                            array_push($attachments, $row->n_raport_1_5);
+                                            ?>
+                                            <a href="<?php echo site_url('assets/pdf/'. $row->n_raport_1_5);?>" target="_blank">Nilai Rapor 1-5</a>
+                                        <?php endif; ?>
+                                        <?php if (!empty($row->no_ujian_smp)):
+                                            array_push($attachments, $row->no_ujian_smp);
+                                            ?>
+                                            <?php if (count($attachments)>0):?>, <?php endif;?> <a href="<?php echo site_url('assets/pdf/'. $row->no_ujian_smp);?>" target="_blank">No Ujian SMP</a>
+                                        <?php endif; ?>
+                                    </td>
                                     <td><?=status($row->diterima);?></td>
                                     <td>
                                     <?=anchor('siswa/update/'.$row->id, '<i class="icon-pencil"></i>', array('class' => 'btn btn-mini btn-info tooltips', 'data-placement' => 'top', 'data-original-title' => 'Edit'));?>
@@ -100,6 +124,20 @@
                                     <td><?=$row->pilihan_2;?></td>
                                     <td><?=$row->pilihan_3;?></td>
                                     <td><?=$row->pilihan_4;?></td>
+                                        <td>
+                                            <?php
+                                            $attachments = [];
+                                            if (!empty($row->n_raport_1_5)):
+                                                array_push($attachments, $row->n_raport_1_5);
+                                                ?>
+                                                <a href="<?php echo site_url('assets/pdf/'. $row->n_raport_1_5);?>" target="_blank">Nilai Rapor 1-5</a>
+                                            <?php endif; ?>
+                                            <?php if (!empty($row->no_ujian_smp)):
+                                                array_push($attachments, $row->no_ujian_smp);
+                                                ?>
+                                                <?php if (count($attachments)>0):?>, <?php endif;?> <a href="<?php echo site_url('assets/pdf/'. $row->no_ujian_smp);?>" target="_blank">No Ujian SMP</a>
+                                            <?php endif; ?>
+                                        </td>
                                     <td>
                                     <div class="btn-group">
                                     <button data-toggle="dropdown" class="btn btn-primary btn-mini dropdown-toggle">Diterima di <span class="caret"></span></button>
