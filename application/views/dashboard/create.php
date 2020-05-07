@@ -80,6 +80,28 @@
                                       <div class="text-warning">Catatan ! Hanya file dengan type .JPG dan ukuran file maksimal 5 Mb.</div>
                                   </div>
                               </div>
+
+                         <div class="control-group">
+                             <label class="control-label">Logo (Additional)</label>
+                             <div class="controls">
+                                 <div class="fileupload fileupload-new" data-provides="fileupload">
+                                     <div class="fileupload-new thumbnail" style="width: auto; height: auto;">
+                                         <img src="<?=$logo2;?>"/>
+                                     </div>
+                                     <div class="fileupload-preview fileupload-exists thumbnail" style="max-width:; max-height: 150px; line-height: 20px;"></div>
+                                     <div>
+                                             <span class="btn btn-file">
+                                                <span class="fileupload-new">Browse</span>
+                                                <span class="fileupload-exists">Change</span>
+                                                <input type="file" class="default" name="file2" accept=".jpg" oninput="return checkImage(this);"/>
+                                             </span>
+                                         <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+                                     </div>
+                                 </div>
+                                 <div class="text-warning">Catatan ! Hanya file dengan type .JPG dan ukuran file maksimal 5 Mb.</div>
+                             </div>
+                             <input type="hidden" name="logo2_old" value="<?php echo $query['logo2']; ?>">
+                         </div>
                               
                               <div class="control-group error">
                                   <label class="control-label">PPDB Tahun</label>
@@ -100,6 +122,16 @@
                                      ?>
                                   </div>
                               </div>
+
+                         <div class="control-group">
+                             <label class="control-label">Status Pengumuman</label>
+                             <div class="controls">
+                                 <?php
+                                 $status_pengumuman = array('open' => 'Dibuka', 'closed' => 'Ditutup');
+                                 echo form_dropdown('status_pengumuman', $status_pengumuman, $query['status_pengumuman'], 'class="span12 chosen"');
+                                 ?>
+                             </div>
+                         </div>
 
                               <div class="control-group">
                                   <label class="control-label">Meta Keyword</label>
@@ -136,6 +168,13 @@
                                   </div>
                               </div>
 
+                             <div class="control-group">
+                                 <label class="control-label">Informasi Pengumuman</label>
+                                 <div class="controls">
+                                     <textarea name="pesan_status_pengumuman" required="true" class="span12 wysihtml6" rows="12"><?=set_value('pesan_status_pengumuman') ? set_value('pesan_status_daftar') : $query['pesan_status_pengumuman']?></textarea>
+                                 </div>
+                             </div>
+
                               <div class="form-actions">
                                    <button type="submit" class="btn btn-success"><i class="icon-save"></i> Update</button>
                               </div>
@@ -147,3 +186,46 @@
        </div>
    </div>
 </div>
+<script type="text/javascript">
+    function checkImage(oInput) {
+        var _validFileExtensions = ["jpg", "JPG"];
+        if (oInput.type == "file") {
+            var sFileName = oInput.value;
+            if (sFileName.length > 0) {
+                var blnValid = false;
+                for (var j = 0; j < _validFileExtensions.length; j++) {
+                    var sCurExtension = _validFileExtensions[j];
+                    if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
+                        blnValid = true;
+                        break;
+                    }
+                }
+
+                var _file = oInput.files[0];
+                if (_file.size > 5000000) {
+                    blnValid = false;
+                }
+
+                if (!blnValid) {
+                    $(oInput).addClass('text-error');
+                    var input_name = $(oInput).attr('name');
+                    var label_err = $(oInput).parent().find("label.text-error");
+                    if (label_err.length == 0) {
+                        $(oInput).parent().append('<label id="' + input_name + '-error" class="text-error" for="' + input_name + '">' + "Mohon pastikan dokumen yang Anda upload hanya dalam format " + _validFileExtensions.join(", ") + ' dan berukuran maksimal 5 Mb.</label>');
+                    } else {
+                        label_err.html("Mohon pastikan dokumen yang Anda upload hanya dalam format " + _validFileExtensions.join(", ") + " dan berukuran maksimal 5 Mb.");
+                    }
+                    oInput.value = "";
+                    //return false;
+                } else {
+                    console.log(oInput.value);
+                    var label_err = $(oInput).parent().find("label.text-error");
+                    if (label_err.length > 0) {
+                        label_err.remove();
+                    }
+                }
+            }
+        }
+        return true;
+    }
+</script>

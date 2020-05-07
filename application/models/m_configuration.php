@@ -6,7 +6,7 @@ class M_configuration extends CI_Model {
     private $table = 'configuration';
     private $data  = array();
 
-    public function field_data($file = NULL)
+    public function field_data($file = NULL, $file2 = NULL)
     {
         $this->data = array(
                       'nama_sekolah'        => $this->input->post('nama_sekolah'),
@@ -21,12 +21,19 @@ class M_configuration extends CI_Model {
                       'pesan_sukses'        => $this->input->post('pesan_sukses'),
                       'pesan_gagal'         => $this->input->post('pesan_gagal'),
                       'pesan_status_daftar' => $this->input->post('pesan_status_daftar'),
-                      'ppdb_tahun'          => $this->input->post('ppdb_tahun')
+                      'ppdb_tahun'          => $this->input->post('ppdb_tahun'),
+                      'status_pengumuman'   => $this->input->post('status_pengumuman'),
+                      'pesan_status_pengumuman'   => $this->input->post('pesan_status_pengumuman')
 					  );
         
         if ($file != NULL)
         {
             $this->data['logo'] = $file;
+        }
+
+        if ($file2 != NULL)
+        {
+            $this->data['logo2'] = $file2;
         }
     }
 

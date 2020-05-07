@@ -1677,6 +1677,10 @@ var App = function () {
         if ($('.wysihtml5').size() > 0) {
             $('.wysihtml5').wysihtml5();
         }
+
+        if ($('.wysihtml6').size() > 0) {
+            $('.wysihtml6').wysihtml5();
+        }
     }
 
     var handleToggleButtons = function () {

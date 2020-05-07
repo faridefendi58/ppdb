@@ -24,7 +24,17 @@ class Configuration extends CI_Controller {
                     {
                         $this->delete_photo(config('logo'));
                     }
-                    $this->m_configuration->field_data($file);
+
+                    $file2 = $this->upload2();
+                    if ($file2 != NULL)
+                    {
+                        if (!empty($_POST['logo2_old'])) {
+                            $this->delete_photo($_POST['logo2_old']);
+                        }
+                    }
+                    unset($_POST['logo2_old']);
+
+                    $this->m_configuration->field_data($file, $file2);
                     $this->m_configuration->update();
                     $this->message->config('on', 'success', 'Pengaturan Aplikasi sudah diperbaharui!');
                     redirect('configuration/index/1');
@@ -43,6 +53,7 @@ class Configuration extends CI_Controller {
         	    $data['action']  = site_url('configuration/index/1');
                 $data['logo']    = config('logo') != '' ? base_url().'assets/images/'.config('logo') : base_url().'assets/images/logo.jpg';
                 $data['query']   = $this->m_configuration->find();
+                $data['logo2']   = (!empty($data['query']['logo2']))? base_url().'assets/images/'. $data['query']['logo2'] : base_url().'assets/images/logo.jpg';
         	    $data['content'] = 'dashboard/create';
         		$this->load->view('theme/index', $data);
                 $this->message->close();
@@ -89,6 +100,35 @@ class Configuration extends CI_Controller {
         if(file_exists('./assets/images/'.$file))
         {
             unlink('./assets/images/'.$file);
+        }
+    }
+
+    private function upload2()
+    {
+        $config['upload_path']   = APPPATH . '../assets';
+        $config['allowed_types'] = 'jpg';
+        $config['max_size']      = '5000';
+        $config['encrypt_name']  = TRUE;
+        $this->load->library('upload', $config);
+        if($this->upload->do_upload('file2') == TRUE)
+        {
+            $data   = $this->upload->data();
+            $config = array(
+                'source_image'    => $data['full_path'],
+                'new_image'       => APPPATH . '../assets/images/',
+                //'maintain_ration' => TRUE,
+                'width'           => 99,
+                'height'          => 99
+            );
+            $this->load->library('image_lib', $config);
+            $this->image_lib->resize();
+            $file = APPPATH . '../assets/' . $data['file_name'];
+            unlink($file);
+            return $data['file_name'];
+        }
+        else
+        {
+            return NULL;
         }
     }
 

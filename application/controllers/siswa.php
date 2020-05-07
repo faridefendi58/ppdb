@@ -307,14 +307,20 @@ class Siswa extends CI_Controller {
         }
         else
         {
-            $data['message'] = '';
-            $data['title']   = 'Hasil Seleksi PPDB Tahun ' . config('ppdb_tahun');
-            $data['ppdb']    = 'active';
-            $data['seleksi'] = 'class = "active"';
-    	    $data['action']  = site_url('siswa/hasil_seleksi');
-    	    $data['content'] = 'siswa/cetak_formulir';
-            $data['button']  = 'Lihat Hasil Seleksi';
-    		$this->load->view('theme/index', $data);
+            if (config('status_pengumuman') == 'closed')
+            {
+                $data['info']    = config('pesan_status_pengumuman');
+                $data['content'] = 'siswa/pengumuman_ditutup';
+            } else {
+                $data['message'] = '';
+                $data['title'] = 'Hasil Seleksi PPDB Tahun ' . config('ppdb_tahun');
+                $data['ppdb'] = 'active';
+                $data['seleksi'] = 'class = "active"';
+                $data['action'] = site_url('siswa/hasil_seleksi');
+                $data['content'] = 'siswa/cetak_formulir';
+                $data['button'] = 'Lihat Hasil Seleksi';
+            }
+            $this->load->view('theme/index', $data);
         }
     }
     
