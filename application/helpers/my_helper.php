@@ -72,7 +72,7 @@ if ( ! function_exists('indo_date'))
                  break;
          }    
          
-         $result = $day.' '.$bulan.' '.$year;
+         $result = $day.' '.strtoupper($bulan).' '.$year;
          return $result;
     }
 }

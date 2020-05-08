@@ -84,35 +84,42 @@ class Laporan extends CI_Controller {
     private function export_excel($query, $file_name)
     {                       
         $objXLS = new PHPExcel();
-        $objSheet = $objXLS->setActiveSheetIndex(0);            
+        $objSheet = $objXLS->setActiveSheetIndex(0);
         
         $cell = 2;        
         $no   = 1;
-        $objSheet->setCellValue('A1', 'No.');
-        $objSheet->setCellValue('B1', 'No. Pendaftaran');
-        $objSheet->setCellValue('C1', 'Tanggal Pendaftaran');
-        $objSheet->setCellValue('D1', 'Jalur Pendaftaran');
-        $objSheet->setCellValue('E1', 'Pilihan 1');
-        $objSheet->setCellValue('F1', 'Pilihan 2');
-        $objSheet->setCellValue('G1', 'Pilihan 3');
-        $objSheet->setCellValue('H1', 'Pilihan 4');
-        $objSheet->setCellValue('I1', 'Nama');
-        $objSheet->setCellValue('J1', 'Tempat Lahir');
-        $objSheet->setCellValue('K1', 'Tanggal Lahir');
-        $objSheet->setCellValue('L1', 'Jenis Kelamin');
-        $objSheet->setCellValue('M1', 'Agama');
-        $objSheet->setCellValue('N1', 'Alamat');
-        $objSheet->setCellValue('O1', 'Asal Sekolah');
-        $objSheet->setCellValue('P1', 'Nama Orang Tua');
-        $objSheet->setCellValue('Q1', 'Pekerjaan Orang Tua');
-        $objSheet->setCellValue('R1', 'Hasil Seleksi');
+        $objSheet->setCellValue('A1', 'NO.');
+        $objSheet->setCellValue('B1', 'NO. PENDAFTARAN');
+        $objSheet->setCellValue('C1', 'TANGGAL PENDAFTARAN');
+        $objSheet->setCellValue('D1', 'JALUR PENDAFTARAN');
+        $objSheet->setCellValue('E1', 'PILIHAN 1');
+        $objSheet->setCellValue('F1', 'PILIHAN 2');
+        $objSheet->setCellValue('G1', 'PILIHAN 3');
+        $objSheet->setCellValue('H1', 'PILIHAN 4');
+        $objSheet->setCellValue('I1', 'NAMA');
+        $objSheet->setCellValue('J1', 'TEMPAT LAHIR');
+        $objSheet->setCellValue('K1', 'TANGGAL LAHIR');
+        $objSheet->setCellValue('L1', 'JENIS KELAMIN');
+        $objSheet->setCellValue('M1', 'AGAMA');
+        $objSheet->setCellValue('N1', 'ALAMAT');
+        $objSheet->setCellValue('O1', 'ASAL SEKOLAH');
+        $objSheet->setCellValue('P1', 'NAMA ORANG TUA');
+        $objSheet->setCellValue('Q1', 'PEKERJAAN ORANG TUA');
+        $objSheet->setCellValue('R1', 'HASIL SELEKSI');
+        $objSheet->setCellValue('S1', 'NILAI RATA-RATA SEMESTER 1');
+        $objSheet->setCellValue('T1', 'NILAI RATA-RATA SEMESTER 2');
+        $objSheet->setCellValue('U1', 'NILAI RATA-RATA SEMESTER 3');
+        $objSheet->setCellValue('V1', 'NILAI RATA-RATA SEMESTER 4');
+        $objSheet->setCellValue('W1', 'NILAI RATA-RATA SEMESTER 5');
+        $objSheet->setCellValue('X1', 'NILAI RATA-RATA UN');
+        $objSheet->setCellValue('Y1', 'NILAI RATA-RATA US');
 
         foreach($query->result_array() as $data)
         {
             $objSheet->setCellValue('A'.$cell, $no);
             $objSheet->setCellValue('B'.$cell, $data['no_daftar']);
             $objSheet->setCellValue('C'.$cell, indo_date($data['tgl_daftar']));
-            $objSheet->setCellValue('D'.$cell, $data['jalur_id'] == 1 ? 'Umum' : 'Prestasi');
+            $objSheet->setCellValue('D'.$cell, $data['jalur_id'] == 1 ? 'UMUM' : 'PRESTASI');
             $objSheet->setCellValue('E'.$cell, $data['pilihan_1']);
             $objSheet->setCellValue('F'.$cell, $data['pilihan_2']);
             $objSheet->setCellValue('G'.$cell, $data['pilihan_3']);
@@ -120,16 +127,23 @@ class Laporan extends CI_Controller {
             $objSheet->setCellValue('I'.$cell, $data['nama']);
             $objSheet->setCellValue('J'.$cell, $data['tmp_lahir']);
             $objSheet->setCellValue('K'.$cell, indo_date($data['tgl_lahir']));
-            $objSheet->setCellValue('L'.$cell, $data['jns_kelamin'] == 'L' ? 'Laki-laki':'Perempuan');
-            $objSheet->setCellValue('M'.$cell, agama($data['agama']));
+            $objSheet->setCellValue('L'.$cell, $data['jns_kelamin'] == 'L' ? 'LAKI-LAKI':'PEREMPUAN');
+            $objSheet->setCellValue('M'.$cell, strtoupper(agama($data['agama'])));
             $objSheet->setCellValue('N'.$cell, $data['alamat']);
             $objSheet->setCellValue('O'.$cell, $data['asal_sekolah']);
             $objSheet->setCellValue('P'.$cell, $data['nama_ortu']);
             $objSheet->setCellValue('Q'.$cell, $data['pk_nama']);
             $objSheet->setCellValue('R'.$cell, status($data['diterima']));
+            $objSheet->setCellValue('S'.$cell, $data['n_rata']);
+            $objSheet->setCellValue('T'.$cell, $data['n_rata2']);
+            $objSheet->setCellValue('U'.$cell, $data['n_rata3']);
+            $objSheet->setCellValue('V'.$cell, $data['n_rata4']);
+            $objSheet->setCellValue('W'.$cell, $data['n_rata5']);
+            $objSheet->setCellValue('X'.$cell, $data['nun_rata']);
+            $objSheet->setCellValue('Y'.$cell, $data['nus_rata']);
             $cell++;
             $no++;    
-        }                    
+        }
                     
         $objXLS->getActiveSheet()->getColumnDimension("A")->setAutoSize(true);
         $objXLS->getActiveSheet()->getColumnDimension("B")->setAutoSize(true);
@@ -149,7 +163,14 @@ class Laporan extends CI_Controller {
         $objXLS->getActiveSheet()->getColumnDimension("P")->setAutoSize(true);
         $objXLS->getActiveSheet()->getColumnDimension("Q")->setAutoSize(true);
         $objXLS->getActiveSheet()->getColumnDimension("R")->setAutoSize(true);
-        $objXLS->setActiveSheetIndex(0);   
+        $objXLS->getActiveSheet()->getColumnDimension("S")->setAutoSize(true);
+        $objXLS->getActiveSheet()->getColumnDimension("T")->setAutoSize(true);
+        $objXLS->getActiveSheet()->getColumnDimension("U")->setAutoSize(true);
+        $objXLS->getActiveSheet()->getColumnDimension("V")->setAutoSize(true);
+        $objXLS->getActiveSheet()->getColumnDimension("W")->setAutoSize(true);
+        $objXLS->getActiveSheet()->getColumnDimension("X")->setAutoSize(true);
+        $objXLS->getActiveSheet()->getColumnDimension("Y")->setAutoSize(true);
+        $objXLS->setActiveSheetIndex(0);
         
         $styleArray = array(
                       'borders' => array(
@@ -172,11 +193,11 @@ class Laporan extends CI_Controller {
                ->setKeywords($this->config->item('sekolah')) 
                ->setCategory('Data Laporan');
 
-        $objWriter = PHPExcel_IOFactory::createWriter($objXLS, 'Excel5'); 
+        $objWriter = PHPExcel_IOFactory::createWriter($objXLS, 'Excel5');
         header('Content-Type: application/vnd.ms-excel'); 
         header('Content-Disposition: attachment;filename="'.$file_name.'.xls"'); 
-        header('Cache-Control: max-age=0'); 
-        $objWriter->save('php://output'); 
+        header('Cache-Control: max-age=0');
+        $objWriter->save('php://output');
         exit();      
     }
 }

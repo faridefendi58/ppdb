@@ -3,6 +3,7 @@
     input.text-error{border-color: #b94a48;}
     #registerForm input, #registerForm textarea{text-transform: uppercase;}
 </style>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.9.2/themes/base/jquery-ui.min.css" rel="stylesheet"/>
 <div id="main-content">
     <div class="container-fluid">
         <div class="row-fluid">
@@ -126,7 +127,7 @@
                             <div class="controls">
                                 <input type="text" name="no_akte" required="true"
                                        value="<?= set_value('no_akte') ? set_value('no_akte') : $query['no_akte'] ?>"
-                                       class="span12" autocomplete="off"/>
+                                       class="span12" autocomplete="off" style="text-transform: none;"/>
                             </div>
                         </div>
 
@@ -152,7 +153,7 @@
                         <div class="control-group">
                             <label class="control-label">Tanggal Lahir</label>
                             <div class="controls">
-                                <input name="tgl_lahir" required="true" class="span5" type="text" data-mask="99-99-9999"
+                                <input name="tgl_lahir" required="true" class="span5 date-picker" type="text" data-masks="99-99-9999"
                                        value="<?= $this->uri->segment(2) == 'create' ? '' : extract_date($query['tgl_lahir']); ?>">
                                 <span class="help-inline">Tanggal-Bulan-Tahun</span>
                             </div>
@@ -262,9 +263,9 @@
                         <div class="control-group">
                             <label class="control-label">No. Kartu Indonesia Pintar (jika ada) </label>
                             <div class="controls">
-                                <input type="number" name="no_kip"
+                                <input type="text" name="no_kip"
                                        value="<?= set_value('no_kip') ? set_value('telp') : $query['no_kip'] ?>"
-                                       class="span12" autocomplete="off" maxlength="15"/>
+                                       class="span12" autocomplete="off" maxlength="15" style="text-transform: none;"/>
                             </div>
                         </div>
 
@@ -410,7 +411,7 @@
                             <div class="controls">
                                 <input type="text" name="hasil_ibu" required="true"
                                        value="<?= set_value('hasil_ibu') ? set_value('hasil_ibu') : $query['hasil_ibu'] ?>"
-                                       class="span5 money" autocomplete="off"/><span
+                                       class="span5 moneys" autocomplete="off"/><span
                                         class="help-inline">(contoh : 1.000.000)</span>
                             </div>
                         </div>
@@ -841,6 +842,7 @@
 <script src="<?=base_url();?>assets/theme/js/jquery-1.8.3.min.js"></script>
 <script src="<?=base_url();?>assets/theme/js/jquery.validate.js"></script>
 <script src="<?=base_url();?>assets/theme/js/jquery.maskMoney.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
 <script type="text/javascript">
     var is_update = "<?php echo ($this->uri->segment(2) == 'update')? 1 : 0 ?>";
     if (is_update == "1") {
@@ -948,7 +950,7 @@
         }
         return true;
     }
-    $('.money').maskMoney({thousands:'.', decimal:',', allowZero:false, precision:0});
+
     function checkNilai() {
         var clean = this.value.replace(/[^0-9,]/g, "")
             .replace(/(,.*?),(.*,)?/, "$1");
@@ -1012,4 +1014,12 @@
         }
         return true;
     }
+
+    $('input.date-picker').datepicker({
+        dateFormat: "dd-mm-yy",
+        changeMonth: true,
+        changeYear: true,
+        yearRange: '1990:2020',
+    });
+    //$('.money').maskMoney({thousands:'.', decimal:',', allowZero:false, precision:0});
 </script>
