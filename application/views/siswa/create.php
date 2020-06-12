@@ -16,11 +16,12 @@
                 pada formulir berikut ini.<br>
                 * Tiap Peserta WAJIB mengisi formulir berikut dengan "LENGKAP dan BENAR", dan sesuai dengan
                 <b>KETENTUAN</b> yang ada pada formulir berikut ini. <br>
-                * Tiap Peserta Hanya dapat mendaftar satu kali dengan data peserta yang valid. <br>
-                * <b>Cetak Bukti Pendaftaran Online</b> dan catat nomor pendaftaran sebelum menutup browser. <br><br>
+                * Tiap Peserta Hanya dapat mendaftar <b>SATU KALI</b> dengan data peserta yang valid. <br>
+                * <b>Cetak Bukti Pendaftaran Online</b> sebelum menutup browser. <br>
+                * <b>Catat, simpan, dan diingat <b>Nomor Pendaftaran dan Tahun-Bulan-Tanggal</b> lahir pada formulir bukti pendaftaran online untuk melihat <a href="http://ppdb.smkn2muaraenim.sch.id/siswa/hasil_seleksi"><b>Pengumuman HASIL SELEKSI</b></a> pada tahap selanjutnya. <br><br>
 
-                <u><b>Catatan :</b></u> <br>
-                * Gunakan akses internet (koneksi internet) yang stabil.
+                ** Gunakan akses internet (koneksi internet) yang stabil.<br>
+                ** Pastikan perangkat dan browser anda terinstall pdf viewer.<br><br>
                 <br><br>
 
 
@@ -37,7 +38,7 @@
         <div class="row-fluid">
             <div class="span12">
                 <div class="widget">
-                    <div class="widget-title">
+                    <div class="widget-title" id="w-title">
                         <h4><i class="icon-home"></i> FORM PENDAFTARAN</h4>
                     </div>
                     <div class="widget-body form">
@@ -53,6 +54,7 @@
                             </div>
                         <?php } ?> <br>
 
+                        <div id="warning-area" class="alert alert-error" style="display: none;"></div>
                         <p>Kolom bertanda <span class="text-error">*</span> tidak boleh dikosongi.</p>
                         <div class="control-group">
                             <label class="control-label">Jalur Pendaftaran</label>
@@ -352,7 +354,7 @@
                         <div class="control-group">
                             <label class="control-label">Penghasilan Ayah</label>
                             <div class="controls">
-                                <input type="text" name="hasil_ortu" required="true" oninput="isMoneyFormat(this);"
+                                <input type="text" name="hasil_ortu" oninput="isMoneyFormat(this);"
                                        value="<?= set_value('hasil_ortu') ? set_value('hasil_ortu') : $query['hasil_ortu'] ?>"
                                        class="span5 money" autocomplete="off"/> <span
                                         class="help-inline">(contoh : 1.000.000)</span>
@@ -409,7 +411,7 @@
                         <div class="control-group">
                             <label class="control-label">Penghasilan Ibu</label>
                             <div class="controls">
-                                <input type="text" name="hasil_ibu" required="true"
+                                <input type="text" name="hasil_ibu" 
                                        value="<?= set_value('hasil_ibu') ? set_value('hasil_ibu') : $query['hasil_ibu'] ?>"
                                        class="span5 moneys" autocomplete="off"/><span
                                         class="help-inline">(contoh : 1.000.000)</span>
@@ -433,7 +435,7 @@
                             <div class="controls">
                                 <input type="text" name="n_bindo" required="true"
                                        value="<?= set_value('n_bindo') ? set_value('n_bindo') : $query['n_bindo'] ?>"
-                                       class="span2 nilai" maxlength="4" autocomplete="off"/>
+                                       class="span2 nilai" maxlength="5" autocomplete="off"/>
                             </div>
                         </div>
 
@@ -442,7 +444,7 @@
                             <div class="controls">
                                 <input type="text" name="n_bing" required="true"
                                        value="<?= set_value('n_bing') ? set_value('n_bing') : $query['n_bing'] ?>"
-                                       class="span2 nilai" maxlength="4" autocomplete="off"/>
+                                       class="span2 nilai" maxlength="5" autocomplete="off"/>
                             </div>
                         </div>
 
@@ -451,7 +453,7 @@
                             <div class="controls">
                                 <input type="text" name="n_mtk" required="true"
                                        value="<?= set_value('n_mtk') ? set_value('n_mtk') : $query['n_mtk'] ?>"
-                                       class="span2 nilai" maxlength="4" autocomplete="off"/>
+                                       class="span2 nilai" maxlength="5" autocomplete="off"/>
                             </div>
                         </div>
 
@@ -460,7 +462,7 @@
                             <div class="controls">
                                 <input type="text" name="n_ipa" required="true"
                                        value="<?= set_value('n_ipa') ? set_value('n_ipa') : $query['n_ipa'] ?>"
-                                       class="span2 nilai" maxlength="4" autocomplete="off"/>
+                                       class="span2 nilai" maxlength="5" autocomplete="off"/>
                             </div>
                         </div>
                         <br>
@@ -470,7 +472,7 @@
                             <div class="controls">
                                 <input type="text" name="n_rata" required="true"
                                        value="<?= set_value('n_rata') ? set_value('n_rata') : $query['n_rata'] ?>"
-                                       class="span2 nilai" maxlength="4" autocomplete="off"/>
+                                       class="span2 nilai" maxlength="5" autocomplete="off"/>
                             </div>
                         </div>
                         <br>
@@ -482,7 +484,7 @@
                             <div class="controls">
                                 <input type="text" name="n_bindo2" required="true"
                                        value="<?= set_value('n_bindo2') ? set_value('n_bindo2') : $query['n_bindo2'] ?>"
-                                       class="span2 nilai" maxlength="4" autocomplete="off"/>
+                                       class="span2 nilai" maxlength="5" autocomplete="off"/>
                             </div>
                         </div>
 
@@ -491,7 +493,7 @@
                             <div class="controls">
                                 <input type="text" name="n_bing2" required="true"
                                        value="<?= set_value('n_bing2') ? set_value('n_bing2') : $query['n_bing2'] ?>"
-                                       class="span2 nilai" maxlength="4" autocomplete="off"/>
+                                       class="span2 nilai" maxlength="5" autocomplete="off"/>
                             </div>
                         </div>
 
@@ -500,7 +502,7 @@
                             <div class="controls">
                                 <input type="text" name="n_mtk2" required="true"
                                        value="<?= set_value('n_mtk2') ? set_value('n_mtk2') : $query['n_mtk2'] ?>"
-                                       class="span2 nilai" maxlength="4" autocomplete="off"/>
+                                       class="span2 nilai" maxlength="5" autocomplete="off"/>
                             </div>
                         </div>
 
@@ -509,7 +511,7 @@
                             <div class="controls">
                                 <input type="text" name="n_ipa2" required="true"
                                        value="<?= set_value('n_ipa2') ? set_value('n_ipa2') : $query['n_ipa2'] ?>"
-                                       class="span2 nilai" maxlength="4" autocomplete="off"/>
+                                       class="span2 nilai" maxlength="5" autocomplete="off"/>
                             </div>
                         </div>
                         <br>
@@ -519,7 +521,7 @@
                             <div class="controls">
                                 <input type="text" name="n_rata2" required="true"
                                        value="<?= set_value('n_rata2') ? set_value('n_rata2') : $query['n_rata2'] ?>"
-                                       class="span2 nilai" maxlength="4" autocomplete="off"/>
+                                       class="span2 nilai" maxlength="5" autocomplete="off"/>
                             </div>
                         </div>
 
@@ -530,7 +532,7 @@
                             <div class="controls">
                                 <input type="text" name="n_bindo3" required="true"
                                        value="<?= set_value('n_bindo3') ? set_value('n_bindo3') : $query['n_bindo3'] ?>"
-                                       class="span2 nilai" maxlength="4" autocomplete="off"/>
+                                       class="span2 nilai" maxlength="5" autocomplete="off"/>
                             </div>
                         </div>
 
@@ -539,7 +541,7 @@
                             <div class="controls">
                                 <input type="text" name="n_bing3" required="true"
                                        value="<?= set_value('n_bing3') ? set_value('n_bing3') : $query['n_bing3'] ?>"
-                                       class="span2 nilai" maxlength="4" autocomplete="off"/>
+                                       class="span2 nilai" maxlength="5" autocomplete="off"/>
                             </div>
                         </div>
 
@@ -548,7 +550,7 @@
                             <div class="controls">
                                 <input type="text" name="n_mtk3" required="true"
                                        value="<?= set_value('n_mtk3') ? set_value('n_mtk3') : $query['n_mtk3'] ?>"
-                                       class="span2 nilai" maxlength="4" autocomplete="off"/>
+                                       class="span2 nilai" maxlength="5" autocomplete="off"/>
                             </div>
                         </div>
 
@@ -557,7 +559,7 @@
                             <div class="controls">
                                 <input type="text" name="n_ipa3" required="true"
                                        value="<?= set_value('n_ipa3') ? set_value('n_ipa3') : $query['n_ipa3'] ?>"
-                                       class="span2 nilai" maxlength="4" autocomplete="off"/>
+                                       class="span2 nilai" maxlength="5" autocomplete="off"/>
                             </div>
                         </div>
                         <br>
@@ -567,7 +569,7 @@
                             <div class="controls">
                                 <input type="text" name="n_rata3" required="true"
                                        value="<?= set_value('n_rata3') ? set_value('n_rata3') : $query['n_rata3'] ?>"
-                                       class="span2 nilai" maxlength="4" autocomplete="off"/>
+                                       class="span2 nilai" maxlength="5" autocomplete="off"/>
                             </div>
                         </div>
                         <br>
@@ -579,7 +581,7 @@
                             <div class="controls">
                                 <input type="text" name="n_bindo4" required="true"
                                        value="<?= set_value('n_bindo4') ? set_value('n_bindo4') : $query['n_bindo4'] ?>"
-                                       class="span2 nilai" maxlength="4" autocomplete="off"/>
+                                       class="span2 nilai" maxlength="5" autocomplete="off"/>
                             </div>
                         </div>
 
@@ -588,7 +590,7 @@
                             <div class="controls">
                                 <input type="text" name="n_bing4" required="true"
                                        value="<?= set_value('n_bing4') ? set_value('n_bing4') : $query['n_bing4'] ?>"
-                                       class="span2 nilai" maxlength="4" autocomplete="off"/>
+                                       class="span2 nilai" maxlength="5" autocomplete="off"/>
                             </div>
                         </div>
 
@@ -597,7 +599,7 @@
                             <div class="controls">
                                 <input type="text" name="n_mtk4" required="true"
                                        value="<?= set_value('n_mtk4') ? set_value('n_mtk4') : $query['n_mtk4'] ?>"
-                                       class="span2 nilai" maxlength="4" autocomplete="off"/>
+                                       class="span2 nilai" maxlength="5" autocomplete="off"/>
                             </div>
                         </div>
 
@@ -606,7 +608,7 @@
                             <div class="controls">
                                 <input type="text" name="n_ipa4" required="true"
                                        value="<?= set_value('n_ipa4') ? set_value('n_ipa4') : $query['n_ipa4'] ?>"
-                                       class="span2 nilai" maxlength="4" autocomplete="off"/>
+                                       class="span2 nilai" maxlength="5" autocomplete="off"/>
                             </div>
                         </div>
                         <br>
@@ -616,7 +618,7 @@
                             <div class="controls">
                                 <input type="text" name="n_rata4" required="true"
                                        value="<?= set_value('n_rata4') ? set_value('n_rata4') : $query['n_rata4'] ?>"
-                                       class="span2 nilai" maxlength="4" autocomplete="off"/>
+                                       class="span2 nilai" maxlength="5" autocomplete="off"/>
                             </div>
                         </div>
                         <br>
@@ -627,7 +629,7 @@
                             <div class="controls">
                                 <input type="text" name="n_bindo5" required="true"
                                        value="<?= set_value('n_bindo5') ? set_value('n_bindo5') : $query['n_bindo5'] ?>"
-                                       class="span2 nilai" maxlength="4" autocomplete="off"/>
+                                       class="span2 nilai" maxlength="5" autocomplete="off"/>
                             </div>
                         </div>
 
@@ -636,7 +638,7 @@
                             <div class="controls">
                                 <input type="text" name="n_bing5" required="true"
                                        value="<?= set_value('n_bing5') ? set_value('n_bing5') : $query['n_bing5'] ?>"
-                                       class="span2 nilai" maxlength="4" autocomplete="off"/>
+                                       class="span2 nilai" maxlength="5" autocomplete="off"/>
                             </div>
                         </div>
 
@@ -645,7 +647,7 @@
                             <div class="controls">
                                 <input type="text" name="n_mtk5" required="true"
                                        value="<?= set_value('n_mtk5') ? set_value('n_mtk5') : $query['n_mtk5'] ?>"
-                                       class="span2 nilai" maxlength="4" autocomplete="off"/>
+                                       class="span2 nilai" maxlength="5" autocomplete="off"/>
                             </div>
                         </div>
 
@@ -654,7 +656,7 @@
                             <div class="controls">
                                 <input type="text" name="n_ipa5" required="true"
                                        value="<?= set_value('n_ipa5') ? set_value('n_ipa5') : $query['n_ipa5'] ?>"
-                                       class="span2 nilai" maxlength="4" autocomplete="off"/>
+                                       class="span2 nilai" maxlength="5" autocomplete="off"/>
                             </div>
                         </div>
                         <br>
@@ -664,7 +666,7 @@
                             <div class="controls">
                                 <input type="text" name="n_rata5" required="true"
                                        value="<?= set_value('n_rata5') ? set_value('n_rata5') : $query['n_rata5'] ?>"
-                                       class="span2 nilai" maxlength="4" autocomplete="off"/>
+                                       class="span2 nilai" maxlength="5" autocomplete="off"/>
                             </div>
                         </div>
                         <br>
@@ -676,7 +678,7 @@
                             <div class="controls">
                                 <input type="text" name="nun_bindo"
                                        value="<?= set_value('nun_bindo') ? set_value('nun_bindo') : $query['nun_bindo'] ?>"
-                                       class="span2 nilai" maxlength="4" autocomplete="off"/>
+                                       class="span2 nilai" maxlength="5" autocomplete="off"/>
                             </div>
                         </div>
 
@@ -685,7 +687,7 @@
                             <div class="controls">
                                 <input type="text" name="nun_bing"
                                        value="<?= set_value('nun_bing') ? set_value('nun_bing') : $query['nun_bing'] ?>"
-                                       class="span2 nilai" maxlength="4" autocomplete="off"/>
+                                       class="span2 nilai" maxlength="5" autocomplete="off"/>
                             </div>
                         </div>
 
@@ -694,7 +696,7 @@
                             <div class="controls">
                                 <input type="text" name="nun_mtk"
                                        value="<?= set_value('nun_mtk') ? set_value('nun_mtk') : $query['nun_mtk'] ?>"
-                                       class="span2 nilai" maxlength="4" autocomplete="off"/>
+                                       class="span2 nilai" maxlength="5" autocomplete="off"/>
                             </div>
                         </div>
 
@@ -703,7 +705,7 @@
                             <div class="controls">
                                 <input type="text" name="nun_ipa"
                                        value="<?= set_value('nun_ipa') ? set_value('nun_ipa') : $query['nun_ipa'] ?>"
-                                       class="span2 nilai" maxlength="4" autocomplete="off"/>
+                                       class="span2 nilai" maxlength="5" autocomplete="off"/>
                             </div>
                         </div>
                         <br>
@@ -713,7 +715,7 @@
                             <div class="controls">
                                 <input type="text" name="nun_rata"
                                        value="<?= set_value('nun_rata') ? set_value('nun_rata') : $query['nun_rata'] ?>"
-                                       class="span2 nilai" maxlength="4" autocomplete="off"/>
+                                       class="span2 nilai" maxlength="5" autocomplete="off"/>
                             </div>
                         </div>
                         <br>
@@ -724,7 +726,7 @@
                             <div class="controls">
                                 <input type="text" name="nus_bindo"
                                        value="<?= set_value('nus_bindo') ? set_value('nus_bindo') : $query['nus_bindo'] ?>"
-                                       class="span2 nilai" maxlength="4" autocomplete="off"/>
+                                       class="span2 nilai" maxlength="5" autocomplete="off"/>
                             </div>
                         </div>
 
@@ -733,7 +735,7 @@
                             <div class="controls">
                                 <input type="text" name="nus_bing"
                                        value="<?= set_value('nus_bing') ? set_value('nus_bing') : $query['nus_bing'] ?>"
-                                       class="span2 nilai" maxlength="4" autocomplete="off"/>
+                                       class="span2 nilai" maxlength="5" autocomplete="off"/>
                             </div>
                         </div>
 
@@ -742,7 +744,7 @@
                             <div class="controls">
                                 <input type="text" name="nus_mtk"
                                        value="<?= set_value('nus_mtk') ? set_value('nus_mtk') : $query['nus_mtk'] ?>"
-                                       class="span2 nilai" maxlength="4" autocomplete="off"/>
+                                       class="span2 nilai" maxlength="5" autocomplete="off"/>
                             </div>
                         </div>
 
@@ -751,7 +753,7 @@
                             <div class="controls">
                                 <input type="text" name="nus_ipa"
                                        value="<?= set_value('nus_ipa') ? set_value('nus_ipa') : $query['nus_ipa'] ?>"
-                                       class="span2 nilai" maxlength="4" autocomplete="off"/>
+                                       class="span2 nilai" maxlength="5" autocomplete="off"/>
                             </div>
                         </div>
                         <br>
@@ -761,20 +763,22 @@
                             <div class="controls">
                                 <input type="text" name="nus_rata"
                                        value="<?= set_value('nus_rata') ? set_value('nus_rata') : $query['nus_rata'] ?>"
-                                       class="span2 nilai" maxlength="4" autocomplete="off"/>
+                                       class="span2 nilai" maxlength="5" autocomplete="off"/>
                             </div>
                         </div>
                         <br>
 
-                        <h4><i class="icon-signin"></i> UPLOAD NILAI RAPORT DAN NOMOR PESERTA UJIAN SMP (.pdf)</h4>
+                        <h4><i class="icon-signin"></i> UPLOAD NILAI RAPORT DAN NOMOR PESERTA UJIAN SMP (.pdf)</h4><br>
                         <div class="control-group">
                             <label class="control-label">Nilai Raport Semester 1 - 5</label>
                             <div class="controls">
                                 <?php if (($this->uri->segment(2) == 'update') && !empty($query['n_raport_1_5'])) : ?>
                                     <a href="<?php echo site_url('assets/pdf/'. $query['n_raport_1_5']) ?>" title="Nilai Raport Semester 1 - 5" target="_blank"><?php echo $query['n_raport_1_5'];?></a><br><br>
                                 <?php endif; ?>
-                                <input type="file" name="n_raport_1_5" class="span8"  <?php if ($this->uri->segment(2) == 'create') : ?>required="required"<?php endif;?> accept=".pdf" onchange="return checkDoc(this);" />
-                                <p class="text-warning"><b>Pastikan file Nilai Raport Semester 1 Sampai 5 dalam format .pdf dengan ukuran MAKSIMAL 500 KB.</b></p>
+                                <input type="file" name="n_raport_1_5" class="span8"  <?php if ($this->uri->segment(2) == 'create') : ?>required="required"<?php endif;?> accept=".pdf" onchange="return checkDoc2(this);" />
+                                <p class="text-warning"><b>Pastikan Upload file Nilai Raport Semester 1 Sampai 5 dalam format (.pdf) dengan ukuran MAKSIMAL 1MB yang sudah <b>DILEGALISIR</b>.</b></p>
+                                <p class="text-warning"><b>Pastikan Upload file Nilai Raport Semester 1 Sampai 5 dalam format (.pdf) dengan ukuran MAKSIMAL 1MB <b>DALAM SATU FILE</b>.</b></p>
+                                
                             </div>
                         </div>
                         <br>
@@ -786,7 +790,8 @@
                                     <a href="<?php echo site_url('assets/pdf/'. $query['no_ujian_smp']) ?>" title="Nomor Peserta Ujian SMP" target="_blank"><?php echo $query['no_ujian_smp'];?></a><br><br>
                                 <?php endif; ?>
                                 <input type="file" name="no_ujian_smp" class="span8"  <?php if ($this->uri->segment(2) == 'create') : ?>required="required"<?php endif;?> accept=".pdf" onchange="return checkDoc(this);" />
-                                <p class="text-warning"><b>Pastikan file Nomor Peserta Ujan SMP dalam format .pdf dengan ukuran MAKSIMAL 500 KB.</b></p>
+                                <p class="text-warning"><b>Pastikan Upload file Nomor Peserta Ujian SMP dalam format (.pdf) dengan ukuran MAKSIMAL 500 KB.</b></p>
+                                
                             </div>
                         </div>
                         <br>
@@ -796,8 +801,8 @@
                             <div class="controls checkbox-control">
                                 <input type="checkbox" name="agreement" required>
                                 Dengan ini menyatakan bahwa data yang saya isikan adalah benar adanya dan dapat dipertanggung jawabkan.
-                                Data yang telah tersimpan tidak apat diubah kembali, silahkan cek kembali data anda sebelum menyimpan.
-                                Dan dengan ini saya telah melihat, membaca, memahami dan mematuhi peraturan sistem ppdb online <?= config('nama_sekolah'); ?>.
+                                Data yang telah tersimpan tidak dapat diubah kembali, silahkan cek kembali data anda sebelum Klik Tombol <b>DAFTAR</b>.
+                                Dan dengan ini saya telah melihat, membaca, memahami dan mematuhi peraturan/ketentuan sistem PPDB Online <?= config('nama_sekolah'); ?>.
                             </div>
                         </div>
                         <?php endif; ?>
@@ -900,9 +905,16 @@
             {nisn: $(dt).val()},
             function(data, status){
                 if (status == 'success' && data == 'unavailable') {
-                    $(dt).addClass('text-error');
-                    $(dt).parent().append('<label id="nisn-error" class="text-error" for="nisn">NISN '+ $(dt).val() +' pernah terdaftar.</label>');
+                    //$(dt).addClass('text-error');
+                    //$(dt).parent().append('<label id="nisn-error" class="text-error" for="nisn">Anda sudah terdaftar, silakan mengikuti tahap selanjutnya.</label>');
                     $(dt).val("");
+                    //direquest pindah ke atas
+                    $('#warning-area').html('Anda sudah terdaftar ke dalam sistem, silakan mengikuti tahap selanjutnya.').show();
+                    $('html, body').animate({
+                        scrollTop: $("#w-title").offset().top
+                    }, 1000);
+                } else {
+                    $('#warning-area').hide();
                 }
             });
         return false;
@@ -935,7 +947,49 @@
                         $(oInput).parent().append('<label id="' + input_name + '-error" class="text-error" for="' + input_name + '">' + "Mohon pastikan dokumen yang Anda upload hanya dalam format " + _validFileExtensions.join(", ") + ' dan berukuran maksimal 500 Kb.</label>');
                     } else {
                         label_err.html("Mohon pastikan dokumen yang Anda upload hanya dalam format " + _validFileExtensions.join(", ") + " dan berukuran maksimal 500 Kb.");
+                    
                     }
+                    oInput.value = "";
+                    //return false;
+                } else {
+                    console.log(oInput.value);
+                    var input_name = $(oInput).attr('name');
+                    var label_err = $(oInput).parent().find("#"+ input_name +"-error");
+                    if (label_err.length > 0) {
+                        label_err.remove();
+                    }
+                }
+            }
+        }
+        return true;
+    }
+    
+    function checkDoc2(oInput) {
+        if (oInput.type == "file") {
+            var sFileName = oInput.value;
+            if (sFileName.length > 0) {
+                var blnValid = false;
+                for (var j = 0; j < _validFileExtensions.length; j++) {
+                    var sCurExtension = _validFileExtensions[j];
+                    if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
+                        blnValid = true;
+                        break;
+                    }
+                }
+                var _file = oInput.files[0];
+                if (_file.size > 1000000) {
+                    blnValid = false;
+                }
+                if (!blnValid) {
+                    $(oInput).addClass('text-error');
+                    var input_name = $(oInput).attr('name');
+                    var label_err = $(oInput).parent().find("#"+ input_name +"-error");
+                    if (label_err.length == 0) {
+                        $(oInput).parent().append('<label id="' + input_name + '-error" class="text-error" for="' + input_name + '">' + "Mohon pastikan dokumen yang Anda upload hanya dalam format " + _validFileExtensions.join(", ") + ' dan berukuran maksimal 1Mb.</label>');
+                    } else {
+                        label_err.html("Mohon pastikan dokumen yang Anda upload hanya dalam format " + _validFileExtensions.join(", ") + " dan berukuran maksimal 1 Mb.");
+                    }
+                    
                     oInput.value = "";
                     //return false;
                 } else {

@@ -208,6 +208,7 @@ class Siswa extends CI_Controller {
         if ($this->uri->segment(2) == 'create')
         {
             $this->form_validation->set_rules('captcha',          'Captcha',               'trim|required|callback_valid_captcha');
+        	$this->form_validation->set_rules('nisn',     'NISN', 'trim|required|xss_clean|callback_nisn_exist');
         }
 
         $this->form_validation->set_error_delimiters('<div><i class="icon-circle-arrow-right"></i> ', '</div>');
@@ -243,6 +244,16 @@ class Siswa extends CI_Controller {
                 return TRUE;
             }
         }
+    }
+
+    //tambahan 12 juni utk validasi berlapis nisn
+	public function nisn_exist($nisn)
+    {
+        if ($this->m_siswa->is_exist('nisn', $nisn)) {
+            $this->form_validation->set_message('nisn_exist', 'Anda sudah terdaftar ke dalam sistem, silakan mengikuti tahap selanjutnya.');
+            return FALSE;
+        }
+		return TRUE;
     }
 
     public function print_formulir($id)

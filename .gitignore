@@ -19,6 +19,7 @@ application/config/database.php
 .idea/*
 *.docx
 *.bak
+*.ori
 assets/images/*
 assets/photo/*
 assets/captcha/*

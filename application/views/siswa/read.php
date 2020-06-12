@@ -1,6 +1,12 @@
 <style>
-    @media only screen and (max-width: 480px) {
-        .dataTables_wrapper {width: 470px;margin: 0 auto;overflow-x: scroll;}
+    @media only screen and (min-width: 769px) and (max-width: 1024px) {
+        #sample_1 {table-layout: fixed;width: 100% !important;}
+        #sample_1 td,
+        #sample_1 th{width: auto;white-space: normal;text-overflow: ellipsis;font-size: 10px;}
+        .col-short{width:20px !important;}
+    }
+    @media only screen and (max-width: 768px) {
+        .dataTables_wrapper {margin: 0 auto;overflow-x: scroll;}
     }
     @media only screen and (max-width: 360px) {
         .dataTables_wrapper {width: 320px;margin: 0 auto;overflow-x: scroll;}
@@ -49,7 +55,7 @@
                           <table class="table table-striped table-condensed table-bordered" id="sample_1">
                             <thead>
                                 <tr>
-                                    <th style="width:8px;"><input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes" /></th>
+                                    <th style="width:8px;" class="col-short"><input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes" /></th>
                                     <th style="width:8px;">No.</th>
                                     <th>No. Daftar</th>
                                     <th>Nama</th>
@@ -87,7 +93,7 @@
                             <tbody>
                                 <?php $no = 1; foreach($query->result() as $row) : ?>
                                 <tr class="odd gradeX">
-                                    <td><input type="checkbox" class="checkboxes" name="id[]" value="<?=$row->id;?>" /></td>
+                                    <td class="col-short"><input type="checkbox" class="checkboxes" name="id[]" value="<?=$row->id;?>" /></td>
                                     <td><?=$no;?></td>
                                     <td><?=$row->no_daftar;?></td>
                                     <td><?=$row->nama;?></td>
